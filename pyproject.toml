@@ -1,0 +1,37 @@
+[tool.poetry]
+name = "passport photo ai"
+version = "0.1.0"
+description = ""
+authors = ["Denis Sakhno <97180503+ideniska@users.noreply.github.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.11"
+psycopg2 = "^2.9.3"
+gunicorn = "^20.1.0"
+distlib = "^0.3.6"
+Faker = "^16.3.0"
+django-cors-headers = "^3.13.0"
+Pillow = "~=9.3"
+rembg = "2.0.30"
+Django = "4.1"
+celery = "^5.2.7"
+rabbitmq = "^0.2.0"
+channels = "^4.0.0"
+daphne = "^4.0.0"
+channels-redis = "^4.0.0"
+cryptography = "^39.0.1"
+websockets = "^10.4"
+djangorestframework = "^3.14.0"
+stripe = "^5.2.0"
+
+
+
+[tool.poetry.group.prod.dependencies]
+gunicorn = "^20.1.0"
+uvicorn = "^0.20.0"
+websockets = "^10.4"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
