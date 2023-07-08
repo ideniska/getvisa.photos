@@ -7,7 +7,6 @@ from django.core.files import File
 from django.core.files.storage import default_storage
 import cv2
 import os
-from pathlib import Path
 from django.conf import settings
 
 
@@ -190,5 +189,3 @@ class PhotoPreparation:
             watermarked=False,
         )
         new_clean_file_object.save()
-
-

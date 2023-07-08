@@ -1,5 +1,5 @@
 from app.service_v2 import PhotoPreparation
-from core.celery import app
+from mysite.celery import app
 from channels.layers import get_channel_layer
 import asyncio
 from .models import UserFile

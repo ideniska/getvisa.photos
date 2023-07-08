@@ -9,8 +9,6 @@ import cv2
 import os
 from pathlib import Path
 from django.conf import settings
-from channels.layers import get_channel_layer
-from asgiref.sync import async_to_sync
 
 
 class PhotoPreparation:
