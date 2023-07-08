@@ -1,10 +1,8 @@
 from typing import TypeVar
 from django.contrib.auth.models import AbstractUser
-from django.core import signing
 from django.db import models
 from .managers import UserManager
-from django.utils.http import urlsafe_base64_encode
-from django.utils.encoding import force_bytes
+
 
 UserType = TypeVar("UserType", bound="User")
 
