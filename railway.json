@@ -4,7 +4,7 @@
     "builder": "NIXPACKS"
   },
   "deploy": {
-    "startCommand": "poetry install --no-dev --no-interactive --no-ansi && python manage.py migrate && python manage.py collectstatic --noinput && gunicorn mysite.wsgi",
+    "startCommand": "poetry install --no-dev --no-ansi && python manage.py migrate && python manage.py collectstatic --noinput && gunicorn mysite.wsgi",
     "restartPolicyType": "ON_FAILURE",
     "restartPolicyMaxRetries": 10
   }
