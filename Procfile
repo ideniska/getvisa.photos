@@ -1,0 +1,1 @@
+web: poetry install --no-dev --no-ansi & python manage.py makemigrations & python manage.py migrate & gunicorn mysite.wsgi --timeout 120 --workers=3 --threads=3 --worker-connections=1000 & celery -A mysite worker --loglevel=INFO --pool=solo -n worker2@%h
