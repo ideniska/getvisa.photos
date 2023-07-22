@@ -9,13 +9,15 @@ from faker import Faker
 from .service import PhotoPreparation
 import json
 from django.http import JsonResponse
-from app.task import process_photos
+from app.task import process_photos, process_photos_v2
 from celery.result import AsyncResult
 from django.http import JsonResponse
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .stripe import StripeCreatePayment
+from asgiref.sync import sync_to_async
+import asyncio
 
 fake_data = Faker()
 
@@ -29,12 +31,32 @@ class UploadView(FormView):
     form_class = FileForm
     success_url = "/choose/"
 
+    # def form_valid(self, form):
+    #     if self.request.session.modified:
+    #         self.request.session.save()
+    #     session_key = self.request.session.session_key
+
+    #     # Delete old files assosiated with this session
+    #     if UserFile.objects.filter(session=session_key).exists():
+    #         UserFile.objects.filter(session=session_key).delete()
+
+    #     files = self.request.FILES.getlist("file")
+    #     for f in files:
+    #         user_file = UserFile(file=f, session=session_key)
+    #         user_file.save()
+
+    #     return super().form_valid(form)
     def form_valid(self, form):
         if self.request.session.modified:
             self.request.session.save()
         session_key = self.request.session.session_key
 
-        # Delete old files assosiated with this session
+        # Initialize session_key if necessary
+        if not session_key:
+            self.request.session.create()
+            session_key = self.request.session.session_key
+
+        # Delete old files associated with this session
         if UserFile.objects.filter(session=session_key).exists():
             UserFile.objects.filter(session=session_key).delete()
 
@@ -81,6 +103,41 @@ class PrepareBackend(View):
         #     service.make()
 
         return JsonResponse({"success": True})
+
+
+class PrepareBackend_v2(View):
+    async def post(self, request):
+        session_key = self.request.session.session_key
+        uploaded_files = uploaded_files = await sync_to_async(UserFile.objects.filter)(
+            session=session_key, edited=False
+        )
+        photo_size_country = request.POST.get("document_type")
+        # task = go_to_sleep.delay(session_key)
+        await sync_to_async(
+            UserFile.objects.filter(session=session_key).filter(edited=False).update
+        )(prepared_for=photo_size_country)
+        uploaded_files = await sync_to_async(list)(
+            UserFile.objects.filter(session=session_key)
+            .filter(edited=False)
+            .values_list("id", flat=True)
+        )
+        asyncio.create_task(process_photos_v2(session_key, uploaded_files))
+
+        return JsonResponse({"success": True})
+
+
+class CheckTaskStatus(View):
+    def get(self, request, *args, **kwargs):
+        session_key = self.request.session.session_key
+        task_status = UserFile.objects.filter(
+            session=session_key,
+            edited=True,
+        ).exists()  # Adjust this query to get the status of your task
+        return JsonResponse(
+            {
+                "task_status": task_status,
+            }
+        )
 
 
 class ChooseView(View):

@@ -70,9 +70,9 @@
       Prepare photo
     </button>
   </form>
-  <div id="loading-animation" style="display: none">
-    <img src="{% static 'img/loading.gif' %}" alt="Loading..." />
+  <div class="spinner">
   </div>
+  
 </div>
 
 
@@ -112,5 +112,5 @@
 </script>
 {% endcomment %}
 
-<script src="{% static 'js/websocket.js' %}"></script>
+<script src="{% static 'js/prepare.js' %}"></script>
 {% endblock %}

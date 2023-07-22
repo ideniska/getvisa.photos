@@ -31,7 +31,7 @@ class UserFile(models.Model):
             FileExtensionValidator(allowed_extensions=["jpg", "jpeg", "png"]),
         ],
     )
-    session = models.CharField(max_length=150)
+    session = models.CharField(max_length=150, null=False)
     edited = models.BooleanField(default=False)
     prepared_for = models.CharField(choices=DOCUMENT_TYPE_CHOICES, max_length=50)
     uploaded_at = models.DateTimeField(auto_now_add=True)

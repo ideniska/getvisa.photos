@@ -9,6 +9,7 @@ import cv2
 import os
 from pathlib import Path
 from django.conf import settings
+from asgiref.sync import sync_to_async
 
 
 class PhotoPreparation:
@@ -236,7 +237,7 @@ class PhotoPreparation:
             prepared_for=self.prepared_for,
             watermarked=True,
         )
-        new_watermarked_file_object.save()
+        await sync_to_async(new_watermarked_file_object.save)()
 
         # Add clean (no watermark) image to UserFile model
         clean_file_name = os.path.basename(self.clean_output_path)
@@ -251,4 +252,5 @@ class PhotoPreparation:
             prepared_for=self.prepared_for,
             watermarked=False,
         )
-        new_clean_file_object.save()
+        await sync_to_async(new_clean_file_object.save)()
+        print("Prep task finished")

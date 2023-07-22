@@ -1,8 +1,8 @@
-var websocket = new WebSocket(((window.location.protocol === "https:") ? "wss://" : "ws://") + window.location.host + "/ws/progress/");
+// var websocket = new WebSocket(((window.location.protocol === "https:") ? "wss://" : "ws://") + window.location.host + "/ws/progress/");
 
-websocket.onclose = OnClose
-websocket.onmessage = ReceiveMessage
-websocket.onopen = OnOpen
+// websocket.onclose = OnClose
+// websocket.onmessage = ReceiveMessage
+// websocket.onopen = OnOpen
 
 function submitForm() {
     var form = document.getElementById("document-type-form");
@@ -47,10 +47,34 @@ function ReceiveMessage(e) {
     }
 }
 
-function OnClose() {
-    console.log('close');
+function CheckTaskStatus() {
+    $.ajax({
+        url: '/check_status/',
+        method: 'get',
+        success: function (data) {
+            if (!data.task_status) {
+                // task completed, redirect
+                window.location.href = "/prepared"
+            } else {
+                // task not completed, call this function again after some time
+                setTimeout(CheckTaskStatus, 3000);
+            }
+        }
+    });
 }
 
-function OnOpen(e) {
-    console.log('on open:', e);
-}
+$("#YourButtonId").click(function () {
+    // Start the spinner
+    $("#YourSpinnerGifId").css("display", "block");
+    // Send a request to start your function
+    $.ajax({
+        url: '/your_url/',
+        method: 'post',
+        success: function (data) {
+            if (data.success) {
+                // Check if your function finished its execution after 3 seconds
+                setTimeout(CheckTaskStatus, 3000);
+            }
+        }
+    });
+});
