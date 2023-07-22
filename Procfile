@@ -1,1 +1,1 @@
-web: poetry install & python manage.py makemigrations & python manage.py migrate & gunicorn mysite.asgi:application --timeout 120 --workers=3 --threads=3 --worker-connections=1000 & celery -A mysite worker --loglevel=INFO --pool=solo -n worker2@%h
+web: python manage.py makemigrations & python manage.py migrate & uvicorn mysite.asgi:application --host 0.0.0.0
