@@ -10,6 +10,7 @@ import os
 from pathlib import Path
 from django.conf import settings
 from asgiref.sync import sync_to_async
+import pathlib
 
 
 class PhotoPreparation:
@@ -72,6 +73,11 @@ class PhotoPreparation:
         )
 
     async def make(self):
+        clean_output_dir = pathlib.Path(self.clean_output_path).parent
+        clean_output_dir.mkdir(parents=True, exist_ok=True)
+        watermarked_output_dir = pathlib.Path(self.watermarked_output_path).parent
+        watermarked_output_dir.mkdir(parents=True, exist_ok=True)
+
         image = cv2.imread(self.input_path)
 
         # Detect face
