@@ -3,9 +3,9 @@
   <img src="{% static 'img/loading.gif' %}" alt="Loading..." />
 </div>
 <div class="container main">
-  <h1>Step 2 of 2: Choose the document type</h1>
+  <h2>Step 2 of 2: Choose the document type</h2>
   {% if uploaded_files|length == 3 %}
-  <div>
+  <div class="uploaded-images">
     {% for file in uploaded_files%}
 
     <figure class="figure" style="padding-top: 32px; margin-right: 15px">
@@ -24,7 +24,7 @@
   >
   <br />
   {% else %}
-  <div>
+  <div class="uploaded-images">
     {% for file in uploaded_files%}
 
     <figure class="figure" style="max-width: 150px;padding-top: 32px; margin-right: 15px">
