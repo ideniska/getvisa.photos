@@ -60,7 +60,7 @@
                 </a>
             </div>
             <br>
-            <form method="post" enctype="multipart/form-data" class="input-group">
+            <form method="post" enctype="multipart/form-data" class="input-group" id="upload-form">
                 {% csrf_token %}
                 <div class="input-group">
                     <input type="file" name="file" multiple required class="form-control" id="inputGroupFile04"
