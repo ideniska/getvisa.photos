@@ -3,7 +3,12 @@ function submitForm() {
     var formData = new FormData(form);
 
     // Start the spinner
-    document.querySelector(".spinner").style.display = "block";
+    // document.querySelector(".loading span:nth-of-type(n)").style.display = "inline-block";
+    const spanList = document.querySelectorAll(".loading span");
+    spanList.forEach((span) => {
+        span.style.display = "inline-block";
+    });
+
     // Send a request to start your function
     $.ajax({
         url: '/prepare-backend/',
