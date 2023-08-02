@@ -3,8 +3,42 @@
     box-sizing: border-box;
 }
 
+body {
+    background-color: rgb(0, 2, 18);
+}
+
+h2,
+p {
+    color: white;
+}
+
+.list-group-item {
+    background-color: rgb(25, 26, 35);
+    border-color: rgb(0, 2, 18);
+}
+
+.list-group-item:hover {
+    background-color: rgb(45, 47, 62);
+    ;
+}
+
+.figure-caption {
+    color: white;
+}
+
+.container {
+    max-width: 780px;
+}
+
+
 .main {
     padding: 5% 15% 5% 25%;
+    border-radius: 48px;
+    padding: 56px;
+    background: linear-gradient(rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.05) 100%);
+    align-items: center;
+    display: flex;
+    flex-direction: column;
 }
 
 .navbar {
@@ -90,6 +124,7 @@ form {
         0px 2px 5px 0px rgba(50, 50, 93, 0.1), 0px 1px 1.5px 0px rgba(0, 0, 0, 0.07);
     border-radius: 7px;
     padding: 40px;
+    color: white;
 }
 
 .hidden {
@@ -134,30 +169,62 @@ button:disabled {
     cursor: default;
 }
 
-.spinner {
-    border: 16px solid #f3f3f3;
-    border-top: 16px solid #3498db;
-    border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    animation: spin 2s linear infinite;
+.loading span {
     display: none;
-
-    /* Center the spinner */
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    vertical-align: middle;
+    width: .6em;
+    height: .6em;
+    margin: .19em;
+    background: #007DB6;
+    border-radius: .6em;
+    animation: loading 1s infinite alternate;
 }
 
+/*
+   * Dots Colors
+   * Smarter targeting vs nth-of-type?
+   */
+.loading span:nth-of-type(2) {
+    background: #008FB2;
+    animation-delay: 0.2s;
+}
 
-@keyframes spin {
+.loading span:nth-of-type(3) {
+    background: #009B9E;
+    animation-delay: 0.4s;
+}
+
+.loading span:nth-of-type(4) {
+    background: #00A77D;
+    animation-delay: 0.6s;
+}
+
+.loading span:nth-of-type(5) {
+    background: #00B247;
+    animation-delay: 0.8s;
+}
+
+.loading span:nth-of-type(6) {
+    background: #5AB027;
+    animation-delay: 1.0s;
+}
+
+.loading span:nth-of-type(7) {
+    background: #A0B61E;
+    animation-delay: 1.2s;
+}
+
+/*
+   * Animation keyframes
+   * Use transition opacity instead of keyframes?
+   */
+@keyframes loading {
     0% {
-        transform: rotate(0deg);
+        opacity: 0;
     }
 
     100% {
-        transform: rotate(360deg);
+        opacity: 1;
     }
 }
 
@@ -183,4 +250,10 @@ button:disabled {
     .input-group {
         width: 200%;
     }
+}
+
+.glowbox {
+    opacity: 0;
+    background: conic-gradient(from 230.29deg at 51.63% 52.16%, rgb(36, 0, 255) 0deg, rgb(0, 135, 255) 67.5deg, rgb(108, 39, 157) 198.75deg, rgb(24, 38, 163) 251.25deg, rgb(54, 103, 196) 301.88deg, rgb(105, 30, 255) 360deg);
+    filter: blur(160px);
 }
